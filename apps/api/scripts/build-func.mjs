@@ -41,7 +41,7 @@ const VENDOR_ROOTS = [
 ];
 
 rmSync(outDir, { recursive: true, force: true });
-execSync(`${bun} run trpc:generate`, { cwd: apiDir, stdio: "inherit" });
+mkdirSync(funcDir, { recursive: true });
 
 
 console.log("• bundling function with bun build...");
