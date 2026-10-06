@@ -4,6 +4,7 @@
 	"compilerOptions": {
 		"moduleResolution": "Bundler",
 		"module": "Preserve",
+		"skipLibCheck": true,
 		"types": ["bun", "node", "express"],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true
