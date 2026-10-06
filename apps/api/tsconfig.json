@@ -4,7 +4,7 @@
 	"compilerOptions": {
 		"moduleResolution": "Bundler",
 		"module": "Preserve",
-		"types": ["bun", "node"],
+		"types": ["bun", "node", "express"],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true
 	},
