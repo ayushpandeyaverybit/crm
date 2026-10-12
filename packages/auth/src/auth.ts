@@ -75,7 +75,7 @@ if (env.microsoft) {
 }
 
 export const auth = betterAuth({
-	logger: { level: "debug" }
+	logger: { level: "debug" },
 	appName: "CRM",
 	baseURL: env.apiUrl,
 
