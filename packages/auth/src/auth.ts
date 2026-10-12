@@ -43,6 +43,7 @@ if (env.google) {
 		scope: [...SYNC_SCOPES],
 
 		accessType: "offline",
+		redirectURI: `${env.appUrl}/api/auth/callback/google`,
 	};
 
 	const hostedDomain = primaryWorkspaceDomain();
