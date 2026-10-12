@@ -13,6 +13,7 @@ import { env } from "./env";
 import { ensureWorkspaceMembership } from "./organization";
 import {
 	GOOGLE_PROVIDER_ID,
+	IDENTITY_SCOPES,
 	MICROSOFT_PROVIDER_ID,
 	MICROSOFT_SYNC_SCOPES,
 	SLACK_PROVIDER_ID,
@@ -40,7 +41,7 @@ if (env.google) {
 	const google: NonNullable<typeof socialProviders.google> = {
 		...env.google,
 
-		scope: [...SYNC_SCOPES],
+		scope: [...IDENTITY_SCOPES, ...SYNC_SCOPES],
 
 		accessType: "offline",
 
@@ -74,6 +75,7 @@ if (env.microsoft) {
 }
 
 export const auth = betterAuth({
+	logger: { level: "debug" }
 	appName: "CRM",
 	baseURL: env.apiUrl,
 
