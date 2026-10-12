@@ -46,15 +46,41 @@ const slackCredentials = ():
 	| { clientId: string; clientSecret: string }
 	| undefined => pair("SLACK_CLIENT_ID", "SLACK_CLIENT_SECRET");
 
-const apiUrl =
-	optional("API_URL") ?? optional("BETTER_AUTH_URL") ?? DEFAULT_API_URL;
+export function normalizeOrigin(value: string): string {
+	const trimmed = value.trim();
+	if (!trimmed) return "";
+	try {
+		return new URL(trimmed).origin;
+	} catch {
+		return trimmed.replace(/\/+$/, "");
+	}
+}
 
-const appUrls = (optional("APP_URL") ?? DEFAULT_APP_URL)
+const rawApiUrl =
+	optional("API_URL") ?? optional("BETTER_AUTH_URL") ?? DEFAULT_API_URL;
+const apiUrl = normalizeOrigin(rawApiUrl);
+
+const configuredAppUrl = optional("APP_URL") ?? optional("NEXT_PUBLIC_APP_URL");
+const appUrls = (configuredAppUrl ?? DEFAULT_APP_URL)
 	.split(",")
 	.map((origin) => origin.trim())
-	.filter(Boolean);
+	.filter(Boolean)
+	.map(normalizeOrigin);
 
 const appUrl = appUrls[0] ?? DEFAULT_APP_URL;
+
+const vercelOrigins = [
+	...(optional("VERCEL_PROJECT_PRODUCTION_URL")
+		? [`https://${optional("VERCEL_PROJECT_PRODUCTION_URL")}`]
+		: []),
+	...(optional("VERCEL_URL") ? [`https://${optional("VERCEL_URL")}`] : []),
+].map(normalizeOrigin);
+
+const explicitTrustedOrigins = (optional("BETTER_AUTH_TRUSTED_ORIGINS") ?? "")
+	.split(",")
+	.map((origin) => origin.trim())
+	.filter(Boolean)
+	.map(normalizeOrigin);
 
 export const env = {
 	apiUrl,
@@ -63,7 +89,14 @@ export const env = {
 	microsoft: microsoftCredentials(),
 	slack: slackCredentials(),
 	cookieDomain: optional("AUTH_COOKIE_DOMAIN"),
-	trustedOrigins: [...new Set([...appUrls, apiUrl])],
+	trustedOrigins: [
+		...new Set([
+			...appUrls,
+			apiUrl,
+			...vercelOrigins,
+			...explicitTrustedOrigins,
+		]),
+	].filter(Boolean),
 	isProduction: process.env.NODE_ENV === "production",
 } as const;
 

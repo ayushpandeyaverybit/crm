@@ -86,6 +86,14 @@ export class EnvironmentVariables {
 
 	@IsOptional()
 	@IsString()
+	NEXT_PUBLIC_APP_URL?: string;
+
+	@IsOptional()
+	@IsString()
+	BETTER_AUTH_TRUSTED_ORIGINS?: string;
+
+	@IsOptional()
+	@IsString()
 	AUTH_COOKIE_DOMAIN?: string;
 
 	@IsOptional()

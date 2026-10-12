@@ -43,6 +43,7 @@ if (env.google) {
 		scope: [...SYNC_SCOPES],
 
 		accessType: "offline",
+
 		redirectURI: `${env.appUrl}/api/auth/callback/google`,
 	};
 
@@ -63,6 +64,8 @@ if (env.microsoft) {
 		prompt: "select_account",
 
 		disableProfilePhoto: true,
+
+		redirectURI: `${env.appUrl}/api/auth/callback/microsoft`,
 
 		mapProfileToUser: (profile) => ({
 			email: profile.email ?? profile.preferred_username ?? profile.upn,
@@ -85,6 +88,7 @@ export const auth = betterAuth({
 	socialProviders,
 
 	account: {
+		skipStateCookieCheck: true,
 		accountLinking: {
 			enabled: true,
 			trustedProviders: [GOOGLE_PROVIDER_ID, MICROSOFT_PROVIDER_ID],

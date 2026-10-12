@@ -19,10 +19,13 @@
 			"cache": false,
 			"persistent": true,
 			"passThroughEnv": [
+				"API_URL",
+				"APP_URL",
 				"AUTH_COOKIE_DOMAIN",
 				"AUTH_TRUSTED_ORIGINS",
 				"BLOB_READ_WRITE_TOKEN",
 				"BETTER_AUTH_SECRET",
+				"BETTER_AUTH_TRUSTED_ORIGINS",
 				"BETTER_AUTH_URL",
 				"CACHE_TTL_MS",
 				"DATABASE_URL",
@@ -37,10 +40,13 @@
 		},
 		"test": {
 			"passThroughEnv": [
+				"API_URL",
+				"APP_URL",
 				"AUTH_COOKIE_DOMAIN",
 				"AUTH_TRUSTED_ORIGINS",
 				"BLOB_READ_WRITE_TOKEN",
 				"BETTER_AUTH_SECRET",
+				"BETTER_AUTH_TRUSTED_ORIGINS",
 				"BETTER_AUTH_URL",
 				"CACHE_TTL_MS",
 				"DATABASE_URL",
